@@ -52,6 +52,7 @@ def histograms(image_path, title):
     # Локальный вариант для ручной отладки (рисует окно matplotlib).
     image = Image.open(image_path)
     img = np.array(_to_rgb(image))
+    x = np.arange(256)
 
     plt.figure(figsize=(16, 4))
 
@@ -62,10 +63,15 @@ def histograms(image_path, title):
 
     for i, color, name in zip([0, 1, 2], ['red', 'green', 'blue'], ['R', 'G', 'B']):
         plt.subplot(1, 4, i + 2)
-        plt.hist(img[:, :, i].flatten(), bins=256, color=color, alpha=0.7)
+        # Используем явный расчет частот, чтобы избежать ошибок совместимости
+        # matplotlib/numpy в разных окружениях.
+        channel = img[:, :, i].astype(np.uint8)
+        hist = np.bincount(channel.ravel(), minlength=256)
+        plt.bar(x, hist, width=1.0, color=color, alpha=0.7)
         plt.title(f'{name}-канал')
         plt.xlabel('Интенсивность')
         plt.ylabel('Пиксели')
+        plt.xlim(0, 255)
 
     plt.tight_layout()
     plt.show()
@@ -75,6 +81,7 @@ def histogram_figure_base64(image_path, title):
     """Те же графики, что в histograms, но PNG в base64 для вставки в HTML."""
     image = Image.open(image_path)
     img = np.array(_to_rgb(image))
+    x = np.arange(256)
 
     fig, axes = plt.subplots(1, 4, figsize=(16, 4))
     axes[0].imshow(img)
@@ -83,10 +90,13 @@ def histogram_figure_base64(image_path, title):
 
     for i, color, name in zip([0, 1, 2], ['red', 'green', 'blue'], ['R', 'G', 'B']):
         ax = axes[i + 1]
-        ax.hist(img[:, :, i].flatten(), bins=256, color=color, alpha=0.7)
+        channel = img[:, :, i].astype(np.uint8)
+        hist = np.bincount(channel.ravel(), minlength=256)
+        ax.bar(x, hist, width=1.0, color=color, alpha=0.7)
         ax.set_title(f'{name}-канал')
         ax.set_xlabel('Интенсивность')
         ax.set_ylabel('Пиксели')
+        ax.set_xlim(0, 255)
 
     plt.tight_layout()
     buf = io.BytesIO()
