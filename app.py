@@ -131,9 +131,9 @@ def results():
 
     # 4) Строим три набора гистограмм: для двух исходников и результирующего изображения.
     try:
-        hist1 = histogram_figure_base64(path1, 'Изображение 1')
-        hist2 = histogram_figure_base64(path2, 'Изображение 2')
-        hist3 = histogram_figure_base64(merged_path, 'Склеенное изображение')
+        hist1 = histogram_figure_base64(path1, 'Image 1')
+        hist2 = histogram_figure_base64(path2, 'Image 2')
+        hist3 = histogram_figure_base64(merged_path, 'Merged image')
     except Exception as exc:
         flash(f'Ошибка при построении гистограмм: {exc}')
         return redirect(url_for('index'))

@@ -106,7 +106,7 @@ def histogram_figure_base64(image_path, title):
 
     # Панели 2..4: гистограммы каналов
     channels = image.split()
-    labels = [("R-канал", (220, 60, 60)), ("G-канал", (60, 170, 60)), ("B-канал", (70, 100, 220))]
+    labels = [("R channel", (220, 60, 60)), ("G channel", (60, 170, 60)), ("B channel", (70, 100, 220))]
 
     for idx, (channel, (label, color)) in enumerate(zip(channels, labels), start=1):
         x0 = margin + idx * (panel_w + gap)
