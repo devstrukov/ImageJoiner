@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Результат обработки</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+<body>
+    <div class="container py-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h3 mb-0">Результаты</h1>
+            <a class="btn btn-outline-primary" href="{{ url_for('index') }}">← Новая загрузка</a>
+        </div>
+        <p class="text-secondary mb-4">Ориентация склейки: <strong>{{ 'вертикальная' if orientation == 'vertical' else 'горизонтальная' }}</strong></p>
+
+        <div class="row g-4 mb-5">
+            <div class="col-md-4">
+                <h2 class="h5">Изображение 1</h2>
+                <img src="{{ image1_url }}" class="img-fluid rounded border mb-2" alt="Изображение 1">
+            </div>
+            <div class="col-md-4">
+                <h2 class="h5">Изображение 2</h2>
+                <img src="{{ image2_url }}" class="img-fluid rounded border mb-2" alt="Изображение 2">
+            </div>
+            <div class="col-md-4">
+                <h2 class="h5">Склеенное</h2>
+                <img src="{{ merged_url }}" class="img-fluid rounded border mb-2" alt="Склеенное изображение">
+            </div>
+        </div>
+
+        <h2 class="h4 mb-3">Распределение цветов (R, G, B)</h2>
+        <div class="mb-4">
+            <h3 class="h6 text-muted">Изображение 1</h3>
+            <img src="data:image/png;base64,{{ hist1 }}" class="img-fluid border rounded" alt="Гистограмма 1">
+        </div>
+        <div class="mb-4">
+            <h3 class="h6 text-muted">Изображение 2</h3>
+            <img src="data:image/png;base64,{{ hist2 }}" class="img-fluid border rounded" alt="Гистограмма 2">
+        </div>
+        <div class="mb-4">
+            <h3 class="h6 text-muted">Склеенное изображение</h3>
+            <img src="data:image/png;base64,{{ hist3 }}" class="img-fluid border rounded" alt="Гистограмма склеенного">
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
